@@ -24,7 +24,7 @@ namespace StudentsProject.Rep
             Path = path;
             XElement xe = XElement.Load(path);
             var elements = xe.XPathSelectElements("./Student");
-            Students = new ObservableCollection<Student>(elements.Select(
+            Students = elements.Select(
                 element => new Student
                 {
                     FirstName = element.Element("FirstName").Value,
@@ -32,7 +32,7 @@ namespace StudentsProject.Rep
                     Age = Convert.ToInt32(element.Element("Age").Value),
                     Gender = Convert.ToInt32(element.Element("Gender").Value),
                     Id = Convert.ToInt32(element.Attribute("Id").Value)
-                }));
+                }).ToList();
             Path = path;
         }
 

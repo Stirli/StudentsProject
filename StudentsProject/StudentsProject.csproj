@@ -57,10 +57,11 @@
     <Compile Include="IntToAgeConverter.cs" />
     <Compile Include="IntToGenderConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\RelayCommand.cs" />
     <Compile Include="Rep\Students.cs" />
     <Compile Include="Rep\XmlDataContext.cs" />
     <Compile Include="Rep\IDataContext.cs" />
-    <Compile Include="ViewModels\MainVieModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
