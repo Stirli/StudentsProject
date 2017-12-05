@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,31 +15,76 @@ namespace StudentsProject.ViewModels
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        private readonly IDataContext _context;
         private Students _students;
-        private RelayCommand _addCommand;
-        private Student _formStudent;
-        private Student _currentStudent;
+        private ObservableCollection<Student> _selectedItems;
+        private Student _selectedItem;
 
-        public MainViewModel(IDataContext context)
+        public MainViewModel()
         {
-            _context = context;
+            Commands = new List<RelayCommand>
+            {
+                new RelayCommand(BeginAddStudent){Header = "Добавление"},
+                new RelayCommand(BeginUpdateStudent){Header = "Изменение"},
+                new RelayCommand(RemoveStudent, CanRemoveStudent){Header = "Удалить"},
+                new RelayCommand(ClearSelection){Header = "Очистить выделение"}
+            };
+            SelectedItems = new ObservableCollection<Student>();
         }
 
-        public Students Students => _students ?? (_students = new Students(_context));
-
-        public Student CurrentStudent
+        private void ClearSelection(object o)
         {
-            get { return _currentStudent; }
+            SelectedItem = null;
+        }
+
+        private bool CanRemoveStudent(object o)
+        {
+            return !Students.IsEmpty;
+        }
+
+        private void RemoveStudent(object o)
+        {
+            var list = SelectedItems.ToList();
+            foreach (var student in list)
+            {
+                Students.Remove(student);
+            }
+        }
+
+        private void BeginUpdateStudent(object obj)
+        {
+
+        }
+
+        private void BeginAddStudent(object o)
+        {
+
+        }
+
+        public Students Students => _students ?? (_students = new Students());
+
+        public ObservableCollection<Student> SelectedItems
+        {
+            get { return _selectedItems; }
             set
             {
-                if (Equals(value, _currentStudent)) return;
-                _currentStudent = value;
+                if (Equals(value, _selectedItems)) return;
+                _selectedItems = value;
                 OnPropertyChanged();
             }
         }
 
-        public RelayCommand AddCommand
+        public Student SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (Equals(value, _selectedItem)) return;
+                _selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

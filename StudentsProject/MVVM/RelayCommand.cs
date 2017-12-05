@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace StudentsProject.Properties
+namespace StudentsProject
 {
     class RelayCommand : ICommand
     {
@@ -18,12 +19,13 @@ namespace StudentsProject.Properties
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        public RelayCommand( Action<object> execute, Func<object, bool> canExecute = null)
         {
             this.execute = execute;
             this.canExecute = canExecute;
         }
 
+        public string Header { get; set; }
         public bool CanExecute(object parameter)
         {
             return this.canExecute == null || this.canExecute(parameter);

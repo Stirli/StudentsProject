@@ -1,48 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Students>
-  <Student Id="0">
+  <Student LastId="0">
     <FirstName>Robert</FirstName>
     <Last>Jarman</Last>
     <Age>21</Age>
     <Gender>0</Gender>
   </Student>
-  <Student Id="1">
+  <Student LastId="1">
     <FirstName>Leona</FirstName>
     <Last>Menders</Last>
     <Age>20</Age>
     <Gender>1</Gender>
   </Student>
-  <Student Id="2">
+  <Student LastId="2">
     <FirstName>Helen</FirstName>
     <Last>Wilson</Last>
     <Age>21</Age>
     <Gender>1</Gender>
   </Student>
-  <Student Id="3">
+  <Student LastId="3">
     <FirstName>John</FirstName>
     <Last>Smith</Last>
     <Age>22</Age>
     <Gender>0</Gender>
   </Student>
-  <Student Id="4">
+  <Student LastId="4">
     <FirstName>Алексей</FirstName>
     <Last>Дроздов</Last>
     <Age>19</Age>
     <Gender>0</Gender>
   </Student>
-  <Student Id="5">
+  <Student LastId="5">
     <FirstName>Вадим</FirstName>
     <Last>Халтурин</Last>
     <Age>21</Age>
     <Gender>0</Gender>
   </Student>
-  <Student Id="6">
+  <Student LastId="6">
     <FirstName>Анна</FirstName>
     <Last>Говорухина</Last>
     <Age>20</Age>
     <Gender>1</Gender>
   </Student>
-  <Student Id="7">
+  <Student LastId="7">
     <FirstName>Александр</FirstName>
     <Last>Иванов</Last>
     <Age>20</Age>

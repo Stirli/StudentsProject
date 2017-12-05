@@ -22,9 +22,10 @@ namespace StudentsProject.Rep
         public XmlDataContext(string path)
         {
             Path = path;
+            
             XElement xe = XElement.Load(path);
             var elements = xe.XPathSelectElements("./Student");
-            Students = elements.Select(
+            Students = new List<Student>(elements.Select(
                 element => new Student
                 {
                     FirstName = element.Element("FirstName").Value,
@@ -32,12 +33,12 @@ namespace StudentsProject.Rep
                     Age = Convert.ToInt32(element.Element("Age").Value),
                     Gender = Convert.ToInt32(element.Element("Gender").Value),
                     Id = Convert.ToInt32(element.Attribute("Id").Value)
-                }).ToList();
+                }));
             Path = path;
         }
-
+        
         public string Path { get; set; }
 
-        public ICollection<Student> Students { get; private set; }
+        public IList<Student> Students { get; }
     }
 }

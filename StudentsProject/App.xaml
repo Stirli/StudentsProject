@@ -2,8 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:StudentsProject"
+             xmlns:viewModels="clr-namespace:StudentsProject.ViewModels"
+             xmlns:models="clr-namespace:StudentsProject.Models"
+             xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+       <ResourceDictionary>
+           <ResourceDictionary.MergedDictionaries>
+               <ResourceDictionary Source="Templates/ListTemplate.xaml"/>
+               <ResourceDictionary Source="Templates/EmptyListTemplate.xaml"/>
+           </ResourceDictionary.MergedDictionaries>
+       </ResourceDictionary>
     </Application.Resources>
 </Application>

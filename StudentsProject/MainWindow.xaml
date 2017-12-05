@@ -9,63 +9,20 @@
         xmlns:models="clr-namespace:StudentsProject.Models"
         mc:Ignorable="d"
         Title="Студенты" Height="350" Width="525">
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <local:IntToGenderConverter x:Key="IntToGenderConverter"/>
-        <local:IntToAgeConverter x:Key="IntToAgeConverter"/>
-    </Window.Resources>
-    <Grid>
-        <ListBox  ItemsSource="{Binding Path=Students }" AlternationCount="2">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="5,3"/>
-                    <Setter Property="Padding" Value="5"/>
-                    <Setter Property="Background" Value="#FFE0EDFF"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border x:Name="brd" Background="{TemplateBinding Background}" 
-                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                    <ContentPresenter Margin="{TemplateBinding Padding}"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                                        <Setter Property="Background" Value="#FFA0C7FF"/>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#FFA0C700"/>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="#FF3247CD"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                        <Setter Property="BorderThickness" Value="1"/>
-                                        <Setter Property="BorderBrush" Value="Black"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="models:Student">
-                    <StackPanel>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="FirstName"/>
-                                    <Binding Path="Last"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Text="{Binding Age, Converter={StaticResource IntToAgeConverter}}"/>
-                        <TextBlock Text="{Binding Gender, Converter={StaticResource IntToGenderConverter}}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Label Visibility="{Binding Students.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#7FFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48">
-            Список пуст
-        </Label>
-    </Grid>
+    <DockPanel>
+        <StackPanel>
+            <TextBox Text="{Binding SelectedItem.FirstName}"/>
+            <TextBox Text="{Binding SelectedItem.Last}"/>
+            <TextBox Text="{Binding SelectedItem.Age}"/>
+            <TextBox Text="{Binding SelectedItem.Gender}"/>
+            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="local:RelayCommand">
+                        <Button Content="{Binding Header}" Command="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource StudentsListTemplateSelector}"/>
+    </DockPanel>
 </Window>

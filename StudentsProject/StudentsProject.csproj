@@ -54,10 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="IntToAgeConverter.cs" />
-    <Compile Include="IntToGenderConverter.cs" />
+    <Compile Include="MVVM\ListBoxMultipleSelection.cs" />
+    <Compile Include="MVVM\IntToAgeConverter.cs" />
+    <Compile Include="MVVM\IntToGenderConverter.cs" />
+    <Compile Include="MVVM\StudentsListTemplateSelector.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\RelayCommand.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Rep\Students.cs" />
     <Compile Include="Rep\XmlDataContext.cs" />
     <Compile Include="Rep\IDataContext.cs" />
@@ -74,6 +76,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Templates\EmptyListTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\ListTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Student.cs" />
@@ -105,6 +115,7 @@
   <ItemGroup>
     <AdditionalFiles Include="Students.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

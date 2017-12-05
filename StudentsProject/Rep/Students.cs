@@ -18,9 +18,9 @@ namespace StudentsProject.Rep
         private IDataContext _context;
         private bool _isEmpty;
 
-        public Students(IDataContext context)
+        public Students()
         {
-            _context = context;
+            _context = new XmlDataContext("Students.xml");
             OnPropertyChanged(nameof(IsEmpty));
         }
 
@@ -45,10 +45,28 @@ namespace StudentsProject.Rep
 
         public void Remove(Student obj)
         {
-            _context.Students.Remove(obj);
-            NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new List<Student> { obj });
+            int index = _context.Students.IndexOf(obj);
+            _context.Students.RemoveAt(index);
+            NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, obj, index);
             OnCollectionChanged(args);
-            IsEmpty = _context.Students.Any();
+            IsEmpty = !_context.Students.Any();
+        }
+        public void RemoveRange(IEnumerable<Student> enumerable)
+        {
+            var list = enumerable.ToList();
+            foreach (var student in list)
+            {
+                int index = _context.Students.IndexOf(student);
+                if (index > -1)
+                {
+                    _context.Students.RemoveAt(index);
+                    NotifyCollectionChangedEventArgs args =
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, student, index);
+                    OnCollectionChanged(args);
+                }
+            }
+
+            IsEmpty = !_context.Students.Any();
         }
 
         public IEnumerator<Student> GetEnumerator()

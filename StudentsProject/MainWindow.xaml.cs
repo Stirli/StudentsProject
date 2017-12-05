@@ -25,7 +25,7 @@ namespace StudentsProject
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new XmlDataContext("Students.xml"));
+            DataContext = new MainViewModel();
         }
     }
 }

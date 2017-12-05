@@ -550,8 +550,8 @@ namespace StudentsProject.Annotations
   /// <code>
   /// [SourceTemplate]
   /// public static void something(this Entity x, [Macro(Expression = "guid()", Editable = -1)] string newguid) {
-  ///   /*$ var $x$Id = "$newguid$" + x.ToString();
-  ///   x.DoSomething($x$Id); */
+  ///   /*$ var $x$LastId = "$newguid$" + x.ToString();
+  ///   x.DoSomething($x$LastId); */
   /// }
   /// </code>
   /// </example>

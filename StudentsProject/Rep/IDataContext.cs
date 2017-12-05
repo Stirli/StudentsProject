@@ -12,6 +12,6 @@ namespace StudentsProject.Rep
         /// <summary>
         /// Студенты
         /// </summary>
-        ICollection<Student> Students { get; }
+        IList<Student> Students { get; }
     }
 }
