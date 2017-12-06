@@ -5,15 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsProject"
         mc:Ignorable="d"
-        Title="Студент" Height="233.735" Width="184.94">
-    <StackPanel>
-        <TextBlock Text="Имя"/>
-        <TextBox Text="{Binding SelectedItem.FirstName}"/>
-        <TextBlock Text="Фамилия"/>
-        <TextBox Text="{Binding SelectedItem.Last}"/>
-        <TextBlock Text="Возраст"/>
-        <TextBox Text="{Binding SelectedItem.Age}"/>
-        <TextBlock Text="Пол"/>
-        <ComboBox SelectedItem="{Binding SelectedItem.Gender, Converter={StaticResource IntToGenderConverter}}" ItemsSource="{x:Static local:App.Genders}"/>
-    </StackPanel>
+        Title="Студент" Height="233.735" Width="275.219" WindowStartupLocation="CenterScreen" SizeToContent="Width">
+    <DockPanel Margin="7">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="OK" Command="{Binding OkCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}}"/>
+            <Button Content="Отмена" Command="{Binding CancelCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}}"/>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Text="Имя" />
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Student.FirstName"
+                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}" >
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Text="Фамилия" />
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Student.Last"
+                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}" >
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Text="Возраст" />
+            <TextBox>
+                <TextBox.Text>
+                    <Binding Path="Student.Age"
+                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}" >
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                            <DataErrorValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Text="Пол" />
+            <ComboBox SelectedIndex="{Binding Student.Gender, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}}" ItemsSource="{x:Static local:App.Genders}" />
+        </StackPanel>
+    </DockPanel>
 </Window>
+
+
+

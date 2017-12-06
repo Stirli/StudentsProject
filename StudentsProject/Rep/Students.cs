@@ -16,7 +16,6 @@ namespace StudentsProject.Rep
     class Students : IEnumerable<Student>, INotifyCollectionChanged, INotifyPropertyChanged
     {
         private IDataContext _context;
-        private bool _isEmpty;
 
         public Students()
         {
@@ -26,7 +25,7 @@ namespace StudentsProject.Rep
         public void Create(Student obj)
         {
             _context.Students.Add(obj);
-            NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new List<Student> { obj });
+            NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, obj);
             OnCollectionChanged(args);
         }
 

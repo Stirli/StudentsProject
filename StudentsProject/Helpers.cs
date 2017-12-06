@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudentsProject
 {
-    public static class Helpers
+    static class Helpers
     {
         /// <summary>
         /// Копирует значения свойств obj1 в obj2

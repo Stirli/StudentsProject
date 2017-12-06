@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using StudentsProject.Rep;
+﻿using System.Windows;
 using StudentsProject.ViewModels;
 
 namespace StudentsProject
@@ -28,7 +14,11 @@ namespace StudentsProject
             DataContext = new MainViewModel
             {
                 Ask = str => MessageBox.Show(str, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes,
-                //Update = student => return;
+                Update = student =>
+                {
+                    var dialog = new UpdateStudent() { Student = student };
+                    return dialog.ShowDialog() == true;
+                }
             };
         }
     }

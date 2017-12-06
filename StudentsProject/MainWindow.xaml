@@ -10,13 +10,19 @@
         xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
         mc:Ignorable="d"
         Title="Студенты" Height="350" Width="525">
+    <Window.Resources>
+        <local:IntToGenderConverter x:Key="IntToGenderConverter"/>
+        <local:IntToAgeConverter x:Key="IntToAgeConverter"/>
+    </Window.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Right" Margin="5">
             
             <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:RelayCommand">
-                        <Button Content="{Binding Header}" Command="{Binding}"/>
+                        <Button Command="{Binding}">
+                            <TextBlock Text="{Binding Header}" TextWrapping="Wrap" />
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
