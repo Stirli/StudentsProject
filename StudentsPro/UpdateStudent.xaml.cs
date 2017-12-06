@@ -11,10 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using StudentsProject.Models;
-using StudentsProject.MVVM;
+using StudentsPro.Models;
 
-namespace StudentsProject
+namespace StudentsPro
 {
     /// <summary>
     /// Логика взаимодействия для UpdateStudent.xaml

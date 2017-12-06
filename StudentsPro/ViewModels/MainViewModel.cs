@@ -4,25 +4,21 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using StudentsProject;
-using StudentsProject.DataProviding;
-using StudentsProject.Models;
-using StudentsProject.MVVM;
-using StudentsProject.Properties;
+using StudentsPro.Annotations;
+using StudentsPro;
+using StudentsPro.DataProviding;
+using StudentsPro.Models;
 
-namespace StudentsProject.ViewModels
+namespace StudentsPro.ViewModels
 {
     class MainViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Student> _selectedItems;
         private Student _selectedItem;
 
-        public MainViewModel(IDataProvider<Student> dataProvider, Action<Exception> catcch)
+        public MainViewModel(IDataProvider<Student> dataProvider)
         {
-            Catch = catcch;
-
-            OnError(() => Students = new ObservableCollection<Student>(dataProvider.GetStudents()));
-
+            Students = new ObservableCollection<Student>(dataProvider.GetStudents());
             Commands = new List<RelayCommand>
             {
                 new RelayCommand(BeginAddStudent){Header = "Добавление"},
@@ -102,8 +98,6 @@ namespace StudentsProject.ViewModels
             }
         }
 
-        public Action<Exception> Catch { get; set; }
-
         public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -112,23 +106,6 @@ namespace StudentsProject.ViewModels
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void OnError([NotNull]Action action)
-        {
-            if (Catch != null)
-                try
-                {
-                    action();
-                }
-                catch (Exception e)
-                {
-                    Catch(e);
-                }
-            else
-            {
-                action();
-            }
         }
     }
 }

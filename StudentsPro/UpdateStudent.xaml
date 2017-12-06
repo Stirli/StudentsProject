@@ -1,11 +1,12 @@
-﻿<Window x:Class="StudentsProject.UpdateStudent"
+﻿<Window x:Class="StudentsPro.UpdateStudent"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentsProject"
-        xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
-        xmlns:viewModels="clr-namespace:StudentsProject.ViewModels"
+        xmlns:mvvm="clr-namespace:StudentsPro.MVVM"
+        xmlns:viewModels="clr-namespace:StudentsPro.ViewModels"
+        xmlns:studentsPro="clr-namespace:StudentsPro"
         mc:Ignorable="d"
         Title="Студент" Height="233.735" Width="275.219" WindowStartupLocation="CenterScreen" SizeToContent="Width"
         mvvm:DialogCloser.DialogResult="{Binding DialogResult}">
@@ -53,7 +54,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Text="Пол" />
-            <ComboBox SelectedIndex="{Binding Student.Gender, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UpdateStudent}}}" ItemsSource="{x:Static local:App.Genders}" />
+            <ComboBox SelectedIndex="{Binding Student.Gender, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type studentsPro:UpdateStudent}}}" ItemsSource="{x:Static studentsPro:App.Genders}" />
         </StackPanel>
     </DockPanel>
 </Window>

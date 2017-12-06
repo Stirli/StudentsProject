@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using StudentsProject.Properties;
+using StudentsPro.Annotations;
 
-namespace StudentsProject.Models
+namespace StudentsPro.Models
 {
     public class Student : IDataErrorInfo, INotifyPropertyChanged
     {

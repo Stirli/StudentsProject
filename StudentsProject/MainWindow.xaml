@@ -3,23 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StudentsProject"
-        xmlns:vm="clr-namespace:StudentsProject.ViewModels"
-        xmlns:rep="clr-namespace:StudentsProject.Rep"
         xmlns:models="clr-namespace:StudentsProject.Models"
         xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
         mc:Ignorable="d"
         Title="Студенты" Height="350" Width="525">
     <Window.Resources>
-        <local:IntToGenderConverter x:Key="IntToGenderConverter"/>
-        <local:IntToAgeConverter x:Key="IntToAgeConverter"/>
+        <mvvm:IntToGenderConverter x:Key="IntToGenderConverter"/>
+        <mvvm:IntToAgeConverter x:Key="IntToAgeConverter"/>
     </Window.Resources>
-    <DockPanel>
+    <DockPanel >
         <StackPanel DockPanel.Dock="Right" Margin="5">
-            
             <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="local:RelayCommand">
+                    <DataTemplate DataType="mvvm:RelayCommand">
                         <Button Command="{Binding}">
                             <TextBlock Text="{Binding Header}" TextWrapping="Wrap" />
                         </Button>
@@ -32,7 +28,7 @@
                 <Style TargetType="ContentPresenter">
                     <Setter Property="Content">
                         <Setter.Value>
-                            <ListBox  ItemsSource="{Binding Path=Students }" AlternationCount="2" SelectionMode="Multiple" SelectedItem="{Binding SelectedItem}"
+                            <ListBox  ItemsSource="{Binding Path=Students}" AlternationCount="2" SelectionMode="Multiple" SelectedItem="{Binding SelectedItem}"
                   mvvm:ListBoxMultipleSelection.SelectedItems="{Binding SelectedItems}">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">

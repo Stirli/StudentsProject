@@ -30,7 +30,7 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace StudentsProject.Properties
+namespace StudentsPro.Annotations
 {
   /// <summary>
   /// Indicates that the value of the marked element could be <c>null</c> sometimes,
@@ -550,8 +550,8 @@ namespace StudentsProject.Properties
   /// <code>
   /// [SourceTemplate]
   /// public static void something(this Entity x, [Macro(Expression = "guid()", Editable = -1)] string newguid) {
-  ///   /*$ var $x$LastId = "$newguid$" + x.ToString();
-  ///   x.DoSomething($x$LastId); */
+  ///   /*$ var $x$Id = "$newguid$" + x.ToString();
+  ///   x.DoSomething($x$Id); */
   /// }
   /// </code>
   /// </example>
