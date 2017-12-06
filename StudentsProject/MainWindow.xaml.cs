@@ -25,7 +25,11 @@ namespace StudentsProject
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel
+            {
+                Ask = str => MessageBox.Show(str, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes,
+                //Update = student => return;
+            };
         }
     }
 }

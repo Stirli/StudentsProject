@@ -1,0 +1,19 @@
+﻿<Window x:Class="StudentsProject.UpdateStudent"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentsProject"
+        mc:Ignorable="d"
+        Title="Студент" Height="233.735" Width="184.94">
+    <StackPanel>
+        <TextBlock Text="Имя"/>
+        <TextBox Text="{Binding SelectedItem.FirstName}"/>
+        <TextBlock Text="Фамилия"/>
+        <TextBox Text="{Binding SelectedItem.Last}"/>
+        <TextBlock Text="Возраст"/>
+        <TextBox Text="{Binding SelectedItem.Age}"/>
+        <TextBlock Text="Пол"/>
+        <ComboBox SelectedItem="{Binding SelectedItem.Gender, Converter={StaticResource IntToGenderConverter}}" ItemsSource="{x:Static local:App.Genders}"/>
+    </StackPanel>
+</Window>

@@ -9,7 +9,7 @@ using StudentsProject.ViewModels;
 
 namespace StudentsProject.MVVM
 {
-    class StudentsListTemplateSelector:DataTemplateSelector
+    class StudentsListTemplateSelector : DataTemplateSelector
     {
         public override DataTemplate
             SelectTemplate(object item, DependencyObject container)
@@ -17,9 +17,9 @@ namespace StudentsProject.MVVM
             FrameworkElement element = container as FrameworkElement;
             if (item is MainViewModel vm)
             {
-                return (vm.Students.IsEmpty
-                    ? element.FindResource("StudentsEmptyList")
-                    : element.FindResource("StudentsList")) as DataTemplate;
+                return (vm.Students.Any()
+                    ? element.FindResource("StudentsList")
+                    : element.FindResource("StudentsEmptyList")) as DataTemplate;
             }
 
             return null;

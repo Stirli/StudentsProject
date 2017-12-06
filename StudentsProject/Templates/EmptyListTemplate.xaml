@@ -7,5 +7,4 @@
             Список пуст
         </Label>
     </DataTemplate>
-    <mvvm:StudentsListTemplateSelector x:Key="StudentsListTemplateSelector"/>
 </ResourceDictionary>

@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers.cs" />
     <Compile Include="MVVM\ListBoxMultipleSelection.cs" />
     <Compile Include="MVVM\IntToAgeConverter.cs" />
     <Compile Include="MVVM\IntToGenderConverter.cs" />
@@ -63,6 +64,9 @@
     <Compile Include="Rep\Students.cs" />
     <Compile Include="Rep\XmlDataContext.cs" />
     <Compile Include="Rep\IDataContext.cs" />
+    <Compile Include="UpdateStudent.xaml.cs">
+      <DependentUpon>UpdateStudent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -81,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\ListTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateStudent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

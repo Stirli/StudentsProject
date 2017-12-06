@@ -21,18 +21,6 @@ namespace StudentsProject.Rep
         public Students()
         {
             _context = new XmlDataContext("Students.xml");
-            OnPropertyChanged(nameof(IsEmpty));
-        }
-
-        public bool IsEmpty
-        {
-            get { return _isEmpty; }
-            set
-            {
-                if (value == _isEmpty) return;
-                _isEmpty = value;
-                OnPropertyChanged();
-            }
         }
 
         public void Create(Student obj)
@@ -40,7 +28,6 @@ namespace StudentsProject.Rep
             _context.Students.Add(obj);
             NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new List<Student> { obj });
             OnCollectionChanged(args);
-            IsEmpty = false;
         }
 
         public void Remove(Student obj)
@@ -49,8 +36,8 @@ namespace StudentsProject.Rep
             _context.Students.RemoveAt(index);
             NotifyCollectionChangedEventArgs args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, obj, index);
             OnCollectionChanged(args);
-            IsEmpty = !_context.Students.Any();
         }
+
         public void RemoveRange(IEnumerable<Student> enumerable)
         {
             var list = enumerable.ToList();
@@ -65,8 +52,6 @@ namespace StudentsProject.Rep
                     OnCollectionChanged(args);
                 }
             }
-
-            IsEmpty = !_context.Students.Any();
         }
 
         public IEnumerator<Student> GetEnumerator()
@@ -93,5 +78,6 @@ namespace StudentsProject.Rep
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
     }
 }

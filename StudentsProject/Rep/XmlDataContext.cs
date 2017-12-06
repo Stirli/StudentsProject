@@ -32,7 +32,7 @@ namespace StudentsProject.Rep
                     Last = element.Element("Last").Value,
                     Age = Convert.ToInt32(element.Element("Age").Value),
                     Gender = Convert.ToInt32(element.Element("Gender").Value),
-                    Id = Convert.ToInt32(element.Attribute("Id").Value)
+                    Id = Convert.ToInt32(element.Attribute("LastId").Value)
                 }));
             Path = path;
         }

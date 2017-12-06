@@ -7,11 +7,14 @@
              xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-       <ResourceDictionary>
-           <ResourceDictionary.MergedDictionaries>
-               <ResourceDictionary Source="Templates/ListTemplate.xaml"/>
-               <ResourceDictionary Source="Templates/EmptyListTemplate.xaml"/>
-           </ResourceDictionary.MergedDictionaries>
-       </ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <mvvm:StudentsListTemplateSelector x:Key="StudentsListTemplateSelector"/>
+                </ResourceDictionary>
+                <ResourceDictionary Source="Templates/ListTemplate.xaml"/>
+                <ResourceDictionary Source="Templates/EmptyListTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -13,5 +13,6 @@ namespace StudentsProject
     /// </summary>
     public partial class App : Application
     {
+        public static IEnumerable<string> Genders => StudentsProject.Properties.Settings.Default.Genders.Cast<string>();
     }
 }
