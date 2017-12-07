@@ -1,13 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:StudentsProject.Templates"
                     xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
                     xmlns:models="clr-namespace:StudentsProject.Models"
-                    xmlns:studentsProject="clr-namespace:StudentsProject"
                     xmlns:viewModels="clr-namespace:StudentsProject.ViewModels">
     <mvvm:IntToGenderConverter x:Key="IntToGenderConverter"/>
     <mvvm:IntToAgeConverter x:Key="IntToAgeConverter"/>
-    <DataTemplate DataType="viewModels:MainViewModel">
+    <DataTemplate x:Key="StudentsList" DataType="viewModels:MainViewModel">
         <ListBox  ItemsSource="{Binding Path=Students }" AlternationCount="2" SelectionMode="Multiple" SelectedItem="{Binding SelectedItem}"
                   mvvm:ListBoxMultipleSelection.SelectedItems="{Binding SelectedItems}">
             <ListBox.ItemContainerStyle>
@@ -26,11 +24,11 @@
                                         <Setter Property="Background" Value="#7FE2F1FF"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="#FFFF9700"/>
+                                        <Setter Property="Background" Value="#FE9F00"/>
                                         <Setter Property="Foreground" Value="White"/>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#7FA0C700"/>
+                                        <Setter Property="Background" Value="#F00026"/>
                                         <Setter Property="Foreground" Value="White"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -41,7 +39,7 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="models:Student">
-                    <StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">

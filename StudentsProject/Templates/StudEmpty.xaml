@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:StudentsProject.Templates">
+    <DataTemplate x:Key="StudentsEmptyList">
+        <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16">
+            Список пуст
+        </Label>
+    </DataTemplate>
+</ResourceDictionary>

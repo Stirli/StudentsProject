@@ -61,14 +61,16 @@
     <Compile Include="MVVM\ListBoxMultipleSelection.cs" />
     <Compile Include="MVVM\IntToAgeConverter.cs" />
     <Compile Include="MVVM\IntToGenderConverter.cs" />
-    <Compile Include="MVVM\StudentsListTemplateSelector.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="UpdateStudent.xaml.cs">
-      <DependentUpon>UpdateStudent.xaml</DependentUpon>
+    <Compile Include="Properties\Annotations1.cs" />
+    <Compile Include="DataProviding\IDialogService.cs" />
+    <Compile Include="DataProviding\WindowDialogService.cs" />
+    <Compile Include="UpdateStudentDialog.xaml.cs">
+      <DependentUpon>UpdateStudentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ModelViewService.cs" />
+    <Compile Include="MVVM\ViewModelService.cs" />
     <Compile Include="ViewModels\UpdateDialogViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -82,11 +84,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Templates\Controls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\StudEmpty.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\StudListTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UpdateStudent.xaml">
+    <Page Include="UpdateStudentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

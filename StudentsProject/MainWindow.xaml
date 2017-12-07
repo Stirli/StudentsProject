@@ -5,92 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:StudentsProject.Models"
         xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
-        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:StudentsProject.ViewModels"
+        mc:Ignorable="d" 
+        DataContext="{Binding Source={x:Static mvvm:ViewModelService.Instance}, Path=MainViewModel}"
         Title="Студенты" Height="350" Width="525">
-    <Window.Resources>
-        <mvvm:IntToGenderConverter x:Key="IntToGenderConverter"/>
-        <mvvm:IntToAgeConverter x:Key="IntToAgeConverter"/>
-    </Window.Resources>
-    <DockPanel >
-        <StackPanel DockPanel.Dock="Right" Margin="5">
-            <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Commands}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="mvvm:RelayCommand">
-                        <Button Command="{Binding}">
-                            <TextBlock Text="{Binding Header}" TextWrapping="Wrap" />
-                        </Button>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-        <ContentPresenter>
-            <ContentPresenter.Style>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Content">
-                        <Setter.Value>
-                            <ListBox  ItemsSource="{Binding Path=Students}" AlternationCount="2" SelectionMode="Multiple" SelectedItem="{Binding SelectedItem}"
-                  mvvm:ListBoxMultipleSelection.SelectedItems="{Binding SelectedItems}">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="Padding" Value="5"/>
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="Foreground" Value="Black"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                    <Border x:Name="brd" Background="{TemplateBinding Background}">
-                                                        <ContentPresenter Margin="{TemplateBinding Padding}"/>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                                                            <Setter Property="Background" Value="#7FE2F1FF"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsSelected" Value="True">
-                                                            <Setter Property="Background" Value="#FFFF9700"/>
-                                                            <Setter Property="Foreground" Value="White"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#7FA0C700"/>
-                                                            <Setter Property="Foreground" Value="White"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate DataType="models:Student">
-                                        <StackPanel>
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0} {1}">
-                                                        <Binding Path="FirstName"/>
-                                                        <Binding Path="Last"/>
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
-                                            <TextBlock Text="{Binding Age, Converter={StaticResource IntToAgeConverter}}"/>
-                                            <TextBlock Text="{Binding Gender, Converter={StaticResource IntToGenderConverter}}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Students.Count}" Value="0">
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Label Background="#7FFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48">
-                                        Список пуст
-                                    </Label>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ContentPresenter.Style>
-        </ContentPresenter>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" IsMainMenu="True" ItemsSource="{Binding MainMenu}"  ItemContainerStyle="{StaticResource MenuRelayCommandTemplate}" Background="#00A47F"/>
+        <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Commands}"
+                          ItemTemplate="{StaticResource RelayCommandTemplate}" /></ScrollViewer>
+
+        <ContentPresenter Content="{Binding}" ContentTemplate="{Binding DataTemplate}" />
     </DockPanel>
 </Window>
+

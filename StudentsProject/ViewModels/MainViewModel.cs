@@ -1,46 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using StudentsProject;
 using StudentsProject.DataProviding;
 using StudentsProject.Models;
 using StudentsProject.MVVM;
 using StudentsProject.Properties;
+using StudentsProject.Services;
 
 namespace StudentsProject.ViewModels
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
+        private readonly IDialogService _dialogService;
+        private readonly IDataProvider<Student> _dataProvider;
         private ObservableCollection<Student> _selectedItems;
         private Student _selectedItem;
+        private ObservableCollection<Student> _students;
+        private DataTemplate _dataTemplate;
 
-        public MainViewModel(IDataProvider<Student> dataProvider, Action<Exception> catcch)
+        public MainViewModel(IDialogService dialogService, IDataProvider<Student> dataProvider)
         {
-            Catch = catcch;
-
-            OnError(() => Students = new ObservableCollection<Student>(dataProvider.GetStudents()));
-
+            DataTemplate = App.Current.Resources["StudentsEmptyList"] as DataTemplate;
+            _dialogService = dialogService;
+            _dataProvider = dataProvider;
+            MainMenu = new List<RelayCommand>
+            {
+                new RelayCommand(o =>
+                {
+                    if (_dialogService.OpenFileDialog() == true)
+                    {
+                        Students = new ObservableCollection<Student>(_dataProvider.GetStudents(_dialogService.FileName));
+                    }
+                }){Header = "Открыть"},
+            };
             Commands = new List<RelayCommand>
             {
-                new RelayCommand(BeginAddStudent){Header = "Добавление"},
-                new RelayCommand(BeginUpdateStudent,CanUpdateStudent){Header = "Изменение"},
-                new RelayCommand(RemoveStudent, HasItems){Header = "Удалить"},
-                new RelayCommand(ClearSelection,HasItems){Header = "Очистить выделение"}
+                new RelayCommand(BeginAddStudent, o => Students!=null){Header = "Добавление"},
+                new RelayCommand(BeginUpdateStudent, o => SelectedItem != null){ Header = "Изменение"},
+                new RelayCommand(RemoveStudent, o => SelectedItems.Any()){Header = "Удалить"},
+                new RelayCommand(ClearSelection,o => SelectedItems.Any()){Header = "Очистить выделение"}
             };
             SelectedItems = new ObservableCollection<Student>();
-        }
-
-        private bool HasItems(object o)
-        {
-            return SelectedItems.Any();
-        }
-
-        private bool CanUpdateStudent(object o)
-        {
-            return SelectedItem != null;
         }
 
         private void ClearSelection(object o)
@@ -50,7 +56,7 @@ namespace StudentsProject.ViewModels
 
         private void RemoveStudent(object o)
         {
-            if (Ask == null || Ask("Удалить элементы?"))
+            if (_dialogService.ShowMessage("Удалить элементы?") == true)
             {
                 var list = SelectedItems.ToList();
                 foreach (var student in list)
@@ -62,23 +68,42 @@ namespace StudentsProject.ViewModels
 
         private void BeginUpdateStudent(object obj)
         {
-            var stud = new Student();
-            SelectedItem.CopyTo(stud);
-            if (Update?.Invoke(stud) == true)
+            var student = new Student();
+            SelectedItem.CopyTo(student);
+            if (_dialogService.ShowUpdateDialog(student) == true)
             {
-                stud.CopyTo(SelectedItem);
+                student.CopyTo(SelectedItem);
             }
         }
 
         private void BeginAddStudent(object o)
         {
             var student = new Student();
-            if (Update?.Invoke(student) == true)
+            if (_dialogService.ShowUpdateDialog(student) == true)
+            {
                 Students.Add(student);
+            }
         }
-        public Func<string, bool> Ask { get; set; }
-        public Func<Student, bool> Update { get; set; }
-        public ObservableCollection<Student> Students { get; set; }
+
+        public ObservableCollection<Student> Students
+        {
+            get { return _students; }
+            set
+            {
+                if (Equals(value, _students)) return;
+                _students = value;
+                SelectDataTemplate();
+                _students.CollectionChanged += (sender, args) => SelectDataTemplate();
+                OnPropertyChanged();
+            }
+        }
+
+        private void SelectDataTemplate()
+        {
+            DataTemplate = _students.Any()
+                ? Application.Current.Resources[("StudentsList")] as DataTemplate
+                : Application.Current.Resources[("StudentsEmptyList")] as DataTemplate;
+        }
 
         public ObservableCollection<Student> SelectedItems
         {
@@ -102,33 +127,26 @@ namespace StudentsProject.ViewModels
             }
         }
 
-        public Action<Exception> Catch { get; set; }
 
         public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
+        public IReadOnlyCollection<RelayCommand> MainMenu { get; private set; }
+
+        public DataTemplate DataTemplate
+        {
+            get { return _dataTemplate; }
+            set
+            {
+                _dataTemplate = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
+        [Annotations.NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void OnError([NotNull]Action action)
-        {
-            if (Catch != null)
-                try
-                {
-                    action();
-                }
-                catch (Exception e)
-                {
-                    Catch(e);
-                }
-            else
-            {
-                action();
-            }
         }
     }
 }

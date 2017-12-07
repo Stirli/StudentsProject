@@ -8,18 +8,12 @@ namespace StudentsProject.DataProviding
 {
     class XmlStudentsProvider : IDataProvider<Student>
     {
-        private readonly Func<string> _getPath;
-
-        public XmlStudentsProvider(Func<string> getPath)
-        {
-            _getPath = getPath;
-        }
-        public IEnumerable<Student> GetStudents()
+        public IEnumerable<Student> GetStudents(string path)
         {
             XElement cur = null;
             try
             {
-                XElement xe = XElement.Load("");
+                XElement xe = XElement.Load(path);
                 var elements = xe.XPathSelectElements("./Student");
                 List<Student> list = new List<Student>();
                 foreach (var element in elements)

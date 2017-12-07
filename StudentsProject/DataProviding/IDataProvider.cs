@@ -2,8 +2,8 @@
 
 namespace StudentsProject.DataProviding
 {
-    interface IDataProvider<T>
+    public interface IDataProvider<T>
     {
-        IEnumerable<T> GetStudents();
+        IEnumerable<T> GetStudents(string path);
     }
 }

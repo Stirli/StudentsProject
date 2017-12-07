@@ -9,12 +9,16 @@ using System.Windows;
 using StudentsProject.Models;
 using StudentsProject.MVVM;
 using StudentsProject.Properties;
+using StudentsProject.Services;
 
 namespace StudentsProject.ViewModels
 {
-    class UpdateDialogViewModel:INotifyPropertyChanged
+    public class UpdateDialogViewModel:INotifyPropertyChanged
     {
-        public UpdateDialogViewModel()
+        private Student _student;
+        private bool? _dialogResult;
+
+        public UpdateDialogViewModel(IDialogService dialogService)
         {
             OkCommand = new RelayCommand(o =>
             {
@@ -23,19 +27,39 @@ namespace StudentsProject.ViewModels
                     DialogResult = true;
                     return;
                 }
-                MessageBox.Show(Student.Error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                dialogService.ShowError(Student.Error);
             });
             CancelCommand = new RelayCommand(o => DialogResult = false);
         }
-        public Student Student { get; set; }
+
+        public Student Student
+        {
+            get { return _student; }
+            set
+            {
+                if (Equals(value, _student)) return;
+                _student = value;
+                OnPropertyChanged();
+            }
+        }
 
         public RelayCommand OkCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
-        public bool? DialogResult { get; set; }
+
+        public bool? DialogResult
+        {
+            get { return _dialogResult; }
+            set
+            {
+                if (value == _dialogResult) return;
+                _dialogResult = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
+        [Annotations.NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
