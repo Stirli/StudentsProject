@@ -7,12 +7,12 @@
         xmlns:mvvm="clr-namespace:StudentsProject.MVVM"
         xmlns:vm="clr-namespace:StudentsProject.ViewModels"
         mc:Ignorable="d" 
-        DataContext="{Binding Source={x:Static mvvm:ViewModelService.Instance}, Path=MainViewModel}"
         Title="Студенты" Height="350" Width="525">
     <Window.Resources>
         <mvvm:BoolToDataTemplateConverter x:Key="BoolToDataTemplateConverter"/>
+        <mvvm:ViewModelService x:Key="ViewModelService"/>
     </Window.Resources>
-    <DockPanel>
+    <DockPanel DataContext="{Binding Source={StaticResource ViewModelService}, Path=MainViewModel}">
         <Menu DockPanel.Dock="Top" IsMainMenu="True" ItemsSource="{Binding MainMenu}"  ItemContainerStyle="{StaticResource MenuRelayCommandTemplate}" Background="#00A47F" Foreground="White"/>
         <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Commands}"

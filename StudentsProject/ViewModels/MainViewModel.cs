@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,7 @@ using StudentsProject.Services;
 
 namespace StudentsProject.ViewModels
 {
+    // ModelView главного окна
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly IDialogService _dialogService;
@@ -21,23 +23,35 @@ namespace StudentsProject.ViewModels
         public MainViewModel(IDialogService dialogService, IDataProvider<Student> dataProvider)
         {
             _dialogService = dialogService;
+            // список пунктов главного меню
             MainMenu = new List<RelayCommand>
             {
-                new RelayCommand(o =>
+                new RelayCommand(async o =>
                 {
-                    if (_dialogService.OpenFileDialog() == true)
+                    if (_dialogService.OpenFileDialog(out string fileName))
                     {
-                        Students = new ObservableCollection<Student>(dataProvider.GetStudents(_dialogService.FileName));
+                        try
+                        {
+                            var enumerable = await dataProvider.GetStudentsAsync(fileName);
+                            Students = new ObservableCollection<Student>(enumerable);
+                        }
+                        catch (Exception e)
+                        {
+                            _dialogService.ShowError(e.Message);
+                        }
                     }
                 }){Header = "Открыть"},
             };
+            // список пунктов меню
             Commands = new List<RelayCommand>
             {
                 new RelayCommand(BeginAddStudent, o => Students!=null){Header = "Добавление"},
                 new RelayCommand(BeginUpdateStudent, o => SelectedItem != null){ Header = "Изменение"},
                 new RelayCommand(RemoveStudent, o => SelectedItems.Any()){Header = "Удалить"},
+                // снятие выделения со всех элментов
                 new RelayCommand(ClearSelection,o => SelectedItems.Any()){Header = "Очистить выделение"}
             };
+            // выбранные студенты
             SelectedItems = new ObservableCollection<Student>();
         }
 
@@ -49,14 +63,17 @@ namespace StudentsProject.ViewModels
             {
                 if (Equals(value, _students)) return;
                 _students = value;
-                _students.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(HasItems));
                 OnPropertyChanged();
+                // При каждом изменении коллецкции будет проверяться остаток студентов.
+                _students.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(HasItems));
                 OnPropertyChanged(nameof(HasItems));
             }
         }
 
+        // Остаток студентов
         public bool HasItems => Students != null && Students.Any();
 
+        // Выбранные студенты
         public ObservableCollection<Student> SelectedItems
         {
             get { return _selectedItems; }
@@ -68,6 +85,7 @@ namespace StudentsProject.ViewModels
             }
         }
 
+        // Выбранный студент (или первый из списка)
         public Student SelectedItem
         {
             get { return _selectedItem; }
@@ -80,8 +98,8 @@ namespace StudentsProject.ViewModels
         }
 
 
-        public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
-        public IReadOnlyCollection<RelayCommand> MainMenu { get; private set; }
+        public IReadOnlyCollection<RelayCommand> Commands { get; }
+        public IReadOnlyCollection<RelayCommand> MainMenu { get; }
 
         private void ClearSelection(object o)
         {
@@ -90,7 +108,7 @@ namespace StudentsProject.ViewModels
 
         private void RemoveStudent(object o)
         {
-            if (_dialogService.ShowMessage("Удалить элементы?") == true)
+            if (_dialogService.ShowMessage("Удалить элементы?"))
             {
                 var list = SelectedItems.ToList();
                 foreach (var student in list)
@@ -103,9 +121,11 @@ namespace StudentsProject.ViewModels
         private void BeginUpdateStudent(object obj)
         {
             var student = new Student();
+            // Копируем данные в другой объект, чтобы не внести изменения сразу в список
             SelectedItem.CopyTo(student);
             if (_dialogService.ShowUpdateDialog(student) == true)
             {
+                // Если пользователь подтвердил, копируем данные в выбранный объект
                 student.CopyTo(SelectedItem);
             }
         }

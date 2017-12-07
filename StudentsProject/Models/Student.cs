@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -64,6 +65,7 @@ namespace StudentsProject.Models
             }
         }
 
+        // Текст ошибки валидации Свойства columnName
         public string this[string columnName]
         {
             get
@@ -97,6 +99,7 @@ namespace StudentsProject.Models
             }
         }
 
+        // Последняя ошибка валидации
         public string Error
         {
             get { return _error; }

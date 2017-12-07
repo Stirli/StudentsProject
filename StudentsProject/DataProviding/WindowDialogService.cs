@@ -9,9 +9,12 @@ using StudentsProject.Models;
 
 namespace StudentsProject.Services
 {
+    /// <summary>
+    /// Предоставляет методы для открытия диалоговых окон
+    /// </summary>
     class WindowDialogService : IDialogService
     {
-        public bool? ShowMessage(string message)
+        public bool ShowMessage(string message)
         {
             var result = MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Question);
             return result == MessageBoxResult.Yes;
@@ -19,27 +22,28 @@ namespace StudentsProject.Services
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Ошибка", MessageBoxButton.YesNo, MessageBoxImage.Error);
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        // Данные, введенные пользователем остануться в initialValue
         public bool? ShowUpdateDialog(Student initialValue)
         {
             var studentDialog = new UpdateStudentDialog(initialValue);
             return studentDialog.ShowDialog();
         }
 
-        public bool? OpenFileDialog()
+        public bool OpenFileDialog(out string fileName)
         {
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
             if (result == true)
             {
-                FileName = dialog.FileName;
+                fileName = dialog.FileName;
+                return true;
             }
 
-            return result;
+            fileName = String.Empty;
+            return false;
         }
-
-        public string FileName { get; set; }
     }
 }

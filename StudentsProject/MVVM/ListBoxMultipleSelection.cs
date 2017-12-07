@@ -10,6 +10,7 @@ using System.Windows.Controls;
 
 namespace StudentsProject.MVVM
 {
+    // используется для привязки к списку выделенных элементов ListBox
     public class ListBoxMultipleSelection
     {
         private static ListBox list;

@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace StudentsProject.MVVM
 {
+    // Простая универсальная реализация комманды
     public class RelayCommand : ICommand
     {
         private readonly Func<object, bool> _canExecute;

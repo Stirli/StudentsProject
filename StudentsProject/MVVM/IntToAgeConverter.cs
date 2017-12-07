@@ -8,6 +8,7 @@ namespace StudentsProject.MVVM
 {
     class IntToAgeConverter : IValueConverter
     {
+        // Записывает число в строку и добавляет постфиксы "лет", "год", "года"
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string str = String.Empty;
@@ -50,6 +51,7 @@ namespace StudentsProject.MVVM
             return str;
         }
 
+        // извлекает число из строки
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string str = value.ToString();

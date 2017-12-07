@@ -8,11 +8,12 @@ using StudentsProject.ViewModels;
 
 namespace StudentsProject.MVVM
 {
+    // Предоставляет готовый MainViewModel и 
     public class ViewModelService : INotifyPropertyChanged
     {
         public MainViewModel MainViewModel
         {
-            get { return _mainViewModel ?? (_mainViewModel = new MainViewModel(new WindowDialogService(), new XmlStudentsProvider())); }
+            get => _mainViewModel ?? (_mainViewModel = new MainViewModel(new WindowDialogService(), new XmlStudentsProvider()));
             set
             {
                 if (Equals(value, _mainViewModel)) return;
@@ -20,31 +21,29 @@ namespace StudentsProject.MVVM
                 OnPropertyChanged();
             }
         }
-        
 
-        #region Singleton
-        private static ViewModelService _instance;
-        public static ViewModelService Instance => _instance ?? (_instance = new ViewModelService());
-        private ViewModelService()
+        public UpdateDialogViewModel UpdateDialogViewModel
         {
-
+            get => _udateDialogViewModel ?? (_udateDialogViewModel = new UpdateDialogViewModel(new WindowDialogService()));
+            set
+            {
+                if (Equals(value, _udateDialogViewModel)) return;
+                _udateDialogViewModel = value;
+                OnPropertyChanged();
+            }
         }
-        #endregion
+
+        private MainViewModel _mainViewModel;
+        private UpdateDialogViewModel _udateDialogViewModel;
 
         #region INotifyPropertyChanged
-        private MainViewModel _mainViewModel;
-        private UpdateDialogViewModel _updateDialogViewModel;
-
-        
-
-        #endregion
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
+
     }
 }
