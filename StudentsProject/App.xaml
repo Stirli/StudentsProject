@@ -5,8 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Templates/StudListTemplate.xaml"/>
-                <ResourceDictionary Source="Templates/StudEmpty.xaml"/>
+                <ResourceDictionary Source="Templates/StudList.xaml"/>
+                <ResourceDictionary Source="Templates/StudEmtyList.xaml"/>
                 <ResourceDictionary Source="Templates/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

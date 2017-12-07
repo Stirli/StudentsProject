@@ -5,7 +5,7 @@
                     xmlns:viewModels="clr-namespace:StudentsProject.ViewModels">
     <mvvm:IntToGenderConverter x:Key="IntToGenderConverter"/>
     <mvvm:IntToAgeConverter x:Key="IntToAgeConverter"/>
-    <DataTemplate x:Key="StudentsList" DataType="viewModels:MainViewModel">
+    <DataTemplate x:Key="StudList" DataType="viewModels:MainViewModel">
         <ListBox  ItemsSource="{Binding Path=Students }" AlternationCount="2" SelectionMode="Multiple" SelectedItem="{Binding SelectedItem}"
                   mvvm:ListBoxMultipleSelection.SelectedItems="{Binding SelectedItems}">
             <ListBox.ItemContainerStyle>

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using StudentsProject;
 using StudentsProject.DataProviding;
 using StudentsProject.Models;
 using StudentsProject.MVVM;
-using StudentsProject.Properties;
 using StudentsProject.Services;
 
 namespace StudentsProject.ViewModels
@@ -18,24 +14,20 @@ namespace StudentsProject.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly IDialogService _dialogService;
-        private readonly IDataProvider<Student> _dataProvider;
         private ObservableCollection<Student> _selectedItems;
         private Student _selectedItem;
         private ObservableCollection<Student> _students;
-        private DataTemplate _dataTemplate;
 
         public MainViewModel(IDialogService dialogService, IDataProvider<Student> dataProvider)
         {
-            DataTemplate = App.Current.Resources["StudentsEmptyList"] as DataTemplate;
             _dialogService = dialogService;
-            _dataProvider = dataProvider;
             MainMenu = new List<RelayCommand>
             {
                 new RelayCommand(o =>
                 {
                     if (_dialogService.OpenFileDialog() == true)
                     {
-                        Students = new ObservableCollection<Student>(_dataProvider.GetStudents(_dialogService.FileName));
+                        Students = new ObservableCollection<Student>(dataProvider.GetStudents(_dialogService.FileName));
                     }
                 }){Header = "Открыть"},
             };
@@ -48,6 +40,48 @@ namespace StudentsProject.ViewModels
             };
             SelectedItems = new ObservableCollection<Student>();
         }
+
+
+        public ObservableCollection<Student> Students
+        {
+            get { return _students; }
+            set
+            {
+                if (Equals(value, _students)) return;
+                _students = value;
+                _students.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(HasItems));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(HasItems));
+            }
+        }
+
+        public bool HasItems => Students != null && Students.Any();
+
+        public ObservableCollection<Student> SelectedItems
+        {
+            get { return _selectedItems; }
+            set
+            {
+                if (Equals(value, _selectedItems)) return;
+                _selectedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Student SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (Equals(value, _selectedItem)) return;
+                _selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
+        public IReadOnlyCollection<RelayCommand> MainMenu { get; private set; }
 
         private void ClearSelection(object o)
         {
@@ -82,62 +116,6 @@ namespace StudentsProject.ViewModels
             if (_dialogService.ShowUpdateDialog(student) == true)
             {
                 Students.Add(student);
-            }
-        }
-
-        public ObservableCollection<Student> Students
-        {
-            get { return _students; }
-            set
-            {
-                if (Equals(value, _students)) return;
-                _students = value;
-                SelectDataTemplate();
-                _students.CollectionChanged += (sender, args) => SelectDataTemplate();
-                OnPropertyChanged();
-            }
-        }
-
-        private void SelectDataTemplate()
-        {
-            DataTemplate = _students.Any()
-                ? Application.Current.Resources[("StudentsList")] as DataTemplate
-                : Application.Current.Resources[("StudentsEmptyList")] as DataTemplate;
-        }
-
-        public ObservableCollection<Student> SelectedItems
-        {
-            get { return _selectedItems; }
-            set
-            {
-                if (Equals(value, _selectedItems)) return;
-                _selectedItems = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Student SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                if (Equals(value, _selectedItem)) return;
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        public IReadOnlyCollection<RelayCommand> Commands { get; private set; }
-        public IReadOnlyCollection<RelayCommand> MainMenu { get; private set; }
-
-        public DataTemplate DataTemplate
-        {
-            get { return _dataTemplate; }
-            set
-            {
-                _dataTemplate = value;
-                OnPropertyChanged();
             }
         }
 

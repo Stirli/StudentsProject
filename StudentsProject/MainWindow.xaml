@@ -9,13 +9,16 @@
         mc:Ignorable="d" 
         DataContext="{Binding Source={x:Static mvvm:ViewModelService.Instance}, Path=MainViewModel}"
         Title="Студенты" Height="350" Width="525">
+    <Window.Resources>
+        <mvvm:BoolToDataTemplateConverter x:Key="BoolToDataTemplateConverter"/>
+    </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" IsMainMenu="True" ItemsSource="{Binding MainMenu}"  ItemContainerStyle="{StaticResource MenuRelayCommandTemplate}" Background="#00A47F"/>
+        <Menu DockPanel.Dock="Top" IsMainMenu="True" ItemsSource="{Binding MainMenu}"  ItemContainerStyle="{StaticResource MenuRelayCommandTemplate}" Background="#00A47F" Foreground="White"/>
         <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Commands}"
                           ItemTemplate="{StaticResource RelayCommandTemplate}" /></ScrollViewer>
 
-        <ContentPresenter Content="{Binding}" ContentTemplate="{Binding DataTemplate}" />
+        <ContentPresenter Content="{Binding}" ContentTemplate="{Binding HasItems, ConverterParameter=StudList|StudEmtyList, Converter={StaticResource BoolToDataTemplateConverter}, Mode=OneWay}" Height="284" />
     </DockPanel>
 </Window>
 

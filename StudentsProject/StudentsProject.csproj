@@ -57,6 +57,7 @@
     <Compile Include="DataProviding\IDataProvider.cs" />
     <Compile Include="DataProviding\XmlStudentsProvider.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="MVVM\BoolToDataTemplateConverter.cs" />
     <Compile Include="MVVM\DialogCloser.cs" />
     <Compile Include="MVVM\ListBoxMultipleSelection.cs" />
     <Compile Include="MVVM\IntToAgeConverter.cs" />
@@ -88,11 +89,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\StudEmpty.xaml">
+    <Page Include="Templates\StudEmtyList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\StudListTemplate.xaml">
+    <Page Include="Templates\StudList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
