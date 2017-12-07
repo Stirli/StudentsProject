@@ -62,11 +62,10 @@
     <Compile Include="MVVM\ListBoxMultipleSelection.cs" />
     <Compile Include="MVVM\IntToAgeConverter.cs" />
     <Compile Include="MVVM\IntToGenderConverter.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="DataProviding\IDialogService.cs" />
     <Compile Include="DataProviding\WindowDialogService.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="UpdateStudentDialog.xaml.cs">
       <DependentUpon>UpdateStudentDialog.xaml</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using StudentsProject.Annotations;
 using StudentsProject.DataProviding;
 using StudentsProject.Properties;
 using StudentsProject.Services;
@@ -34,17 +35,16 @@ namespace StudentsProject.MVVM
         private MainViewModel _mainViewModel;
         private UpdateDialogViewModel _updateDialogViewModel;
 
+        
+
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [Annotations.NotifyPropertyChangedInvocator]
+        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-        #endregion
-
     }
 }
